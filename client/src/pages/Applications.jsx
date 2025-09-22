@@ -80,7 +80,8 @@ const Applications = () => {
         <table className="min-w-full bg-white border rounded-lg">
           <thead>
             <tr className="bg-gray-100">
-              <th className="py-3 px-4 border-b text-left">Company</th>
+              <th className="py-3 px-4 border-b text-left">Company Logo</th>
+              <th className="py-3 px-4 border-b text-left">Company Name</th>
               <th className="py-3 px-4 border-b text-left">Job Title</th>
               <th className="py-3 px-4 border-b text-left max-sm:hidden">Location</th>
               <th className="py-3 px-4 border-b text-left max-sm:hidden">Date</th>
@@ -90,15 +91,19 @@ const Applications = () => {
               {userApplications.map((job, index) => (
                 <tr key={index} className="border-b">
                   <td className="py-3 px-4 flex items-center gap-2 border-b">
-                    {job?.companyId?.image ? (
+                    {job?.jobId?.imgurl ? (
                       <img
-                        src={job.companyId.image}
-                        alt={job?.companyId?.name || "Company"}
+                        src={job?.jobId?.imgurl}
+                        alt={job?.jobId?.name || "Company"}
                         className="w-8 h-8 rounded-full"
                       />
                     ) : (
                       <span className="text-gray-400 italic">No logo</span>
                     )}
+                  </td>
+
+                  <td className="py-2 px-4 border-b">
+                    {job?.jobId?.name || "No title"}
                   </td>
 
                   <td className="py-2 px-4 border-b">
