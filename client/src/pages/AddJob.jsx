@@ -9,6 +9,8 @@ const AddJob = () => {
 
   const [title, setTitle] = useState('')
   const [link, setLink] = useState('')
+  const [name, setName] = useState('')
+  const [imgurl, setImgUrl] = useState('')
   const [location, setLocation] = useState('Chennai')
   const [category, setCategory] = useState('Programming')
   const [level, setLevel] = useState('Beginner Level')
@@ -22,13 +24,17 @@ const AddJob = () => {
     try {
       const description = quillRef.current.root.innerHTML
       const {data} = await axios.post(backendUrl+'/api/company/post-job', 
-        {title, description, location, salary, category, level, link},
+        {title, description, location, salary, category, level, link, imgurl, name},
         {headers:{token:companyToken}}
       )
 
       if(data.success){
-        toast.success(data.message)
+        toast.success("Job Posted Successfully")
         setTitle('')
+        setLink('')
+        setName('')
+        setImgUrl('')
+        setLevel('Beginner Level')
         setSalary(0)
         quillRef.current.root.innerHTML = ""
       }
@@ -51,6 +57,15 @@ const AddJob = () => {
 
   return (
     <form onSubmit={onSubmitHandler} className='container p-4 flex flex-col w-full items-start gap-3'>
+      <div className='w-full'>
+        <p className='mb-2'>Company Name</p>
+        <input type="text" placeholder='Type here'
+          onChange={e => setName(e.target.value)}
+          value={name}
+          required 
+          className=' w-full max-w-lg px-3 py-2 border-2 border-gray-300 rounded'/>
+      </div>
+
       <div className='w-full'>
         <p className='mb-2'>Job Title</p>
         <input type="text" placeholder='Type here'
@@ -113,6 +128,15 @@ const AddJob = () => {
           <input type="text" placeholder='Type here'
             onChange={e => setLink(e.target.value)}
             value={link}
+            required 
+            className=' w-full max-w-lg px-3 py-2 border-2 border-gray-300 rounded'/>
+        </div>
+
+       <div className='w-full'>
+          <p className='mb-2'>Company image url</p>
+          <input type="text" placeholder='Type here'
+            onChange={e => setImgUrl(e.target.value)}
+            value={imgurl}
             required 
             className=' w-full max-w-lg px-3 py-2 border-2 border-gray-300 rounded'/>
         </div>

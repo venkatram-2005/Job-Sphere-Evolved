@@ -90,7 +90,7 @@ export const getCompanyData = async (req, res) => {
 
 //Post a Job
 export const postJob = async (req, res) => {
-    const { title, description, location, salary, level, category, link } = req.body
+    const { title, description, location, salary, level, category, link, imgurl, name } = req.body
     const companyId = req.company._id
     try {
         const newJob = new Job({
@@ -103,6 +103,8 @@ export const postJob = async (req, res) => {
             level,
             category,
             link,
+            imgurl,
+            name,
         })
         await newJob.save()
         res.json({ success: true, newJob })

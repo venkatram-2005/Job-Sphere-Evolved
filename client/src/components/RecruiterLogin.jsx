@@ -73,7 +73,7 @@ const RecruiterLogin = () => {
     return (
         <div className='absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center'>
             <form onSubmit={onSubmitHandler} className='relative bg-white p-10 rounded-xl text-slate-500' >
-                <h1 className='text-center text-2xl text-neutral-700 font-medium'>Recruiter {state}</h1>
+                <h1 className='text-center text-2xl text-neutral-700 font-medium'>Contributer {state}</h1>
                 <p className='text-sm'>Welcome back ! Please sign in to continue</p>
 
                 {state === 'Sign Up' && isTextDataSubmitted
@@ -83,7 +83,7 @@ const RecruiterLogin = () => {
                                 <img alt="" className='w-16 rounded-full'  src={image ? URL.createObjectURL(image) : assets.upload_area}/>
                                 <input onChange={e=>setImage(e.target.files[0])} type="file" id='image' hidden/>
                             </label>
-                            <p>Upload Company Logo</p>
+                            <p>Upload Logo</p>
                         </div>
                     </>
                     :
@@ -91,7 +91,7 @@ const RecruiterLogin = () => {
                         {state !== 'Login' && (
                             <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
                                 <img src={assets.person_icon} alt="" />
-                                <input className='outline-none text-sm' onChange={e => setName(e.target.value)} type="text" placeholder='Company Name' value={name} required />
+                                <input className='outline-none text-sm' onChange={e => setName(e.target.value)} type="text" placeholder='Name' value={name} required />
                             </div>
                         )}
 

@@ -50,7 +50,7 @@ const Navbar = () => {
                   onClick={() => setShowRecruiterLogin(true)} 
                   className='text-gray-600 ml-2'
                 >
-                  Recruiter Login
+                  Contributer Login
                 </button>
                 <button 
                   onClick={() => openSignIn()} 
@@ -95,7 +95,7 @@ const Navbar = () => {
                     onClick={() => { setShowRecruiterLogin(true); setIsOpen(false) }} 
                     className='text-gray-600'
                   >
-                    Recruiter Login
+                    Contributer Login
                   </button>
                   <button 
                     onClick={() => { openSignIn(); setIsOpen(false) }} 
