@@ -29,11 +29,6 @@ const ApplyJob = () => {
       if (!userData) {
         return toast.error('Login to apply for jobs');
       }
-      // const token = await getToken()
-      // const {data} = await axios.post(backendUrl+'/api/users/apply',
-      //   {jobId: JobData._id},
-      //   {headers:{Authorization: `Bearer ${token}`}}
-      // )
 
       if (data.success) {
         setJobData(data.job)
@@ -47,18 +42,33 @@ const ApplyJob = () => {
   }
 
   const applyHandler = async () => {
-    try {
-      if (JobData?.link) {
-        // open in new tab
-        window.open(JobData.link, "_blank", "noopener,noreferrer");
-      } 
-      else {
-        toast.error("Job application link not found");
+      if (!userData) {
+        return toast.error('Login to apply for jobs');
       }
-    } 
-    catch (error) {
-      toast.error(error.message);
-    }
+      const token = await getToken()
+      const {data} = await axios.post(backendUrl+'/api/users/apply',
+        {jobId: JobData._id},
+        {headers:{Authorization: `Bearer ${token}`}}
+      )
+      if (data.success) {
+        toast.success(data.message)
+        fetchUserApplications()
+      }
+      else {
+        toast.error(data.message)
+      }
+      try {
+        if (JobData?.link) {
+          // open in new tab
+          window.open(JobData.link, "_blank", "noopener,noreferrer");
+        } 
+        else {
+          toast.error("Job application link not found");
+        }
+      } 
+      catch (error) {
+        toast.error(error.message);
+      }
   };
 
 
