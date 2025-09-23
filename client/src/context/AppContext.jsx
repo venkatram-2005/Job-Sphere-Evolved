@@ -42,7 +42,7 @@ export const AppContextProvider = (props) => {
             toast.error(error.message)
         }
     }
-    // Function to fetch Jobs
+    // Function to fetch Experiences
 
     const fetchExperiences = async()=>{
         try {
@@ -147,6 +147,7 @@ export const AppContextProvider = (props) => {
         setSearchFilter, searchFilter,
         isSearched, setIsSearched,
         jobs, setJobs, 
+        exp, setExp, 
         showRecruiterLogin, setShowRecruiterLogin,
         companyToken, setCompanyToken,
         companyData, setCompanyData,

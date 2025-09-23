@@ -6,7 +6,7 @@ const experienceSchema = new mongoose.Schema({
       description: { type: String, required: true },
       category: { type: String, required: true },
       level: { type: String, required: true },
-      salary: { type: Number, required: true },
+      salary: { type: String, required: true },
       imgurl:{type: String, required: true},
       company: { type: String, required: true },
       date: { type: Number, required: true },

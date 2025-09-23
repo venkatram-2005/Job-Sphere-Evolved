@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import ExperienceHome from './pages/ExperienceHome'
 import ApplyJob from './pages/ApplyJob'
 import Applications from './pages/Applications'
 import RecruiterLogin from './components/RecruiterLogin'
@@ -12,6 +13,8 @@ import ManageJobs from './pages/ManageJobs'
 import 'quill/dist/quill.snow.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import ViewExperience from './pages/ViewExperience'
+
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext)
@@ -22,9 +25,9 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path='/' element={<Home />} />
-        {/* <Route path='/experiences' element={<ExperienceHome />} /> */}
+        <Route path='/experiences' element={<ExperienceHome />} />
         <Route path='/apply-job/:id' element={<ApplyJob />} />
-        {/* <Route path='/experience/:id' element={<ViewExperience />} /> */}
+        <Route path='/experiences/:id' element={<ViewExperience />} />
         <Route path='/applications' element={<Applications />} />
 
         {/* Dashboard with nested routes */}

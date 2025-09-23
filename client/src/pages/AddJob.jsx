@@ -11,10 +11,10 @@ const AddJob = () => {
   const [link, setLink] = useState('')
   const [name, setName] = useState('')
   const [imgurl, setImgUrl] = useState('')
-  const [location, setLocation] = useState('Chennai')
-  const [category, setCategory] = useState('Programming')
-  const [level, setLevel] = useState('Beginner Level')
-  const [salary, setSalary] = useState(0)
+  const [location, setLocation] = useState('')
+  const [category, setCategory] = useState('')
+  const [level, setLevel] = useState('')
+  const [salary, setSalary] = useState('')
   const editorRef = useRef(null)
   const quillRef = useRef(null)
   const {backendUrl, companyToken} = useContext(AppContext)
@@ -35,7 +35,7 @@ const AddJob = () => {
         setName('')
         setImgUrl('')
         setLevel('Beginner Level')
-        setSalary(0)
+        setSalary('')
         quillRef.current.root.innerHTML = ""
       }
       else{
@@ -143,8 +143,8 @@ const AddJob = () => {
        
        <div className='container p-4 flex flex-col w-full items-start gap-3'>
             <div className='w-full'>
-            <p className='mb-2'>Job Salary</p>
-            <input min={0} className='w-full px-3 py-3 border-2 border-gray-300 rounded sm:w-[120px]' onChange={e=>setSalary(e.target.value)} type="Number" placeholder='2500' />
+            <p className='mb-2'>Job Salary Range</p>
+            <input className='w-full px-3 py-3 border-2 border-gray-300 rounded sm:w-[120px]' onChange={e=>setSalary(e.target.value)} type="String" placeholder='2500' />
             </div>
         </div>
 

@@ -12,23 +12,23 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useAuth } from '@clerk/clerk-react'
 
-const ApplyJob = () => {
+const ViewExperience = () => {
   const { id } = useParams()
 
   const [JobData, setJobData] = useState(null)
 
-  const { jobs, backendUrl, userData, userApplications, fetchUserApplications } = useContext(AppContext)
+  const { jobs, backendUrl, userData, userApplications, fetchUserApplications, exp } = useContext(AppContext)
 
   const navigate = useNavigate()
 
   const {getToken} = useAuth()
 
   const fetchJob = async () => {
-    const { data } = await axios.get(backendUrl + `/api/jobs/${id}`)
+    const { data } = await axios.get(backendUrl + `/api/experiences/${id}`)
     try {
-      if (!userData) {
-        return toast.error('Login to apply for jobs');
-      }
+    //   if (!userData) {
+    //     return toast.error('Login to apply for jobs');
+    //   }
       // const token = await getToken()
       // const {data} = await axios.post(backendUrl+'/api/users/apply',
       //   {jobId: JobData._id},
@@ -36,7 +36,7 @@ const ApplyJob = () => {
       // )
 
       if (data.success) {
-        setJobData(data.job)
+        setJobData(data.experience)
       }
       else {
         toast.error(data.message)
@@ -45,22 +45,6 @@ const ApplyJob = () => {
       toast.error(error.message)
     }
   }
-
-  const applyHandler = async () => {
-    try {
-      if (JobData?.link) {
-        // open in new tab
-        window.open(JobData.link, "_blank", "noopener,noreferrer");
-      } 
-      else {
-        toast.error("Job application link not found");
-      }
-    } 
-    catch (error) {
-      toast.error(error.message);
-    }
-  };
-
 
   useEffect(() => {
     fetchJob()
@@ -78,7 +62,7 @@ const ApplyJob = () => {
             <div className='flex flex-col md:flex-row items-center'>
               <img className='h-24 bg-white rounded-lg p-4 mr-4 max-md:mb-4 border' src={JobData.imgurl} alt="" />
               <div className='text-center md:text-left text-nuetral-700'>
-                <h1 className='text-2xl sm:text-4xl font-medium'>{JobData.title}</h1>
+                <h1 className='text-2xl sm:text-4xl font-medium'>{JobData.company}</h1>
                 <div className='flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center text-gray-600 mt-2'>
                   <span className='flex item-center gap-1'>
                     <img src={assets.suitcase_icon} alt="" />
@@ -86,7 +70,7 @@ const ApplyJob = () => {
                   </span>
                   <span className='flex item-center gap-1'>
                     <img src={assets.location_icon} alt="" />
-                    {JobData.location}
+                    {JobData.title}
                   </span>
                   <span className='flex item-center gap-1'>
                     <img src={assets.person_icon} alt="" />
@@ -100,10 +84,10 @@ const ApplyJob = () => {
               </div>
             </div>
 
-            <div className='flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center'>
+            {/* <div className='flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center'>
               <button onClick={applyHandler} className='bg-blue-600 p-2.5 text-white px-10 rounded'>Apply Now</button>
               <p className='mt-1 text-gray-600'>Posted {moment(JobData.date).fromNow()}</p>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -112,9 +96,9 @@ const ApplyJob = () => {
         <div className='flex flex-col lg:flex-row justify-between items-start'>
 
           <div className='w-full lg:w-2/3'>
-            <h2 className='font-bold text-2xl mb-4'>Job Description</h2>
+            <h2 className='font-bold text-2xl mb-4'>Experience</h2>
             <div className='rich-text' dangerouslySetInnerHTML={{ __html: JobData.description }}></div>
-            <button onClick={applyHandler} className='bg-blue-600 p-2.5 text-white px-10 rounded mt-10'>Apply Now</button>
+            {/* <button onClick={applyHandler} className='bg-blue-600 p-2.5 text-white px-10 rounded mt-10'>Apply Now</button> */}
           </div>
 
           {/* Right Section */}
@@ -138,4 +122,4 @@ const ApplyJob = () => {
   )
 }
 
-export default ApplyJob
+export default ViewExperience

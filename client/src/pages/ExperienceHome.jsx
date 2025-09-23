@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar'
-import Hero from '../components/Hero'
-import JobListing from '../components/JobListing'
+import ExperienceHero from '../components/ExperienceHero'
+import ExperienceListing from '../components/ExperienceListing'
 import Subscribe from '../components/Subscribe'
 import Footer from '../components/Footer'
 
@@ -8,8 +8,8 @@ const ExperienceHome = () => {
   return (
     <div>
       <Navbar/>
-      <Hero/>
-      <JobListing/>
+      <ExperienceHero/>
+      <ExperienceListing/>
       <Subscribe/>
       <Footer/>
     </div>
