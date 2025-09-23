@@ -9,6 +9,7 @@ import Dashboard from './pages/DashBoard'
 import AddJob from './pages/AddJob'
 import AddExperience from './pages/AddExperience'
 import ManageJobs from './pages/ManageJobs'
+import ManageExperiences from './pages/ManageExperiences'
 import 'quill/dist/quill.snow.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -33,6 +34,7 @@ const App = () => {
               <Route path='add-job' element={<AddJob />} />
               <Route path='manage-jobs' element={<ManageJobs />} />
               <Route path='add-experience' element={<AddExperience />} />
+              <Route path='manage-experiences' element={<ManageExperiences />} />
             </>
           )}
         </Route>

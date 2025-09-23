@@ -25,8 +25,13 @@ router.get('/applicants',protectCompany, getCompanyJobApplicants)
 //Get Company Job list
 router.get('/list-jobs',protectCompany, getCompanyPostedJobs)
 
-
 //Change Application Visibility
 router.post('/change-visibility',protectCompany, changeVisibility)
+
+//Get Company Experience list
+router.get('/list-experiences',protectCompany, getCompanyPostedExperience)
+
+//Change Application Visibility
+router.post('/change-visibility-experience',protectCompany, changeVisibilityExperience)
 
 export default router
