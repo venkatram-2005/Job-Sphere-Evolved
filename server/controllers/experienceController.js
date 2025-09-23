@@ -1,5 +1,4 @@
 import Experience from '../models/Experience.js';
-import Job from '../models/Experience.js'
 
 // Get all jobs
 export const getExperience = async (req, res) => {

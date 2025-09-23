@@ -11,6 +11,7 @@ import jobRoutes from './routes/jobRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import {clerkMiddleware} from '@clerk/express'
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import experienceRoutes from './routes/experienceRoutes.js';
 
 
 // Initialize express
@@ -35,6 +36,7 @@ app.get("/debug-sentry", function mainHandler(req, res) {
 app.post('/webhooks', clerkWebhooks)
 app.use('/api/company', companyRoutes)
 app.use('/api/jobs', jobRoutes)
+app.use('/api/experiences', experienceRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/subscribe', subscriberRoutes);
 

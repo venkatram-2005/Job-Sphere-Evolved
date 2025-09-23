@@ -18,7 +18,7 @@ export const AppContextProvider = (props) => {
     })
     const [isSearched, setIsSearched] = useState(false)
     const [jobs, setJobs] = useState([])
-
+    const [exp, setExp] = useState([])
     const [showRecruiterLogin, setShowRecruiterLogin] = useState(false)
 
     const [companyToken, setCompanyToken] = useState(null);

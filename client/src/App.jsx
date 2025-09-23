@@ -22,7 +22,9 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path='/' element={<Home />} />
+        {/* <Route path='/experiences' element={<ExperienceHome />} /> */}
         <Route path='/apply-job/:id' element={<ApplyJob />} />
+        {/* <Route path='/experience/:id' element={<ViewExperience />} /> */}
         <Route path='/applications' element={<Applications />} />
 
         {/* Dashboard with nested routes */}

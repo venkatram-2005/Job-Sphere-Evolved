@@ -4,7 +4,7 @@ import JobListing from '../components/JobListing'
 import Subscribe from '../components/Subscribe'
 import Footer from '../components/Footer'
 
-const Home = () => {
+const ExperienceHome = () => {
   return (
     <div>
       <Navbar/>
@@ -16,4 +16,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default ExperienceHome
