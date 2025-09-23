@@ -118,7 +118,7 @@ export const postExperience = async (req, res) => {
     const { title, description, salary, level, category, imgurl, name, company } = req.body
     const companyId = req.company._id
     try {
-        const newJob = new Job({
+        const newExperience = new Job({
             title,
             description,
             salary,
@@ -131,7 +131,7 @@ export const postExperience = async (req, res) => {
             company,
         })
         await newExperience.save()
-        res.json({ success: true, newJob })
+        res.json({ success: true, newExperience })
     }
     catch (error) {
         res.json({ success: false, message: error.message })
