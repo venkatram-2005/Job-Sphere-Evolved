@@ -28,7 +28,7 @@ const Footer = () => {
                   <a href="#" class="hover:underline">Apply for Jobs</a>
                 </li>
                 <li>
-                  <a href="#" class="hover:underline">View Applications</a>
+                  <a href="#" class="hover:underline">View Experiences</a>
                 </li>
               </ul>
             </div>

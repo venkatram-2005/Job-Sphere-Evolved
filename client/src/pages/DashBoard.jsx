@@ -58,9 +58,9 @@ const DashBoard = () => {
                 <p className='max-sm:hidden'>Manage Jobs</p>
               </NavLink>
 
-              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/view-applications'}>
+              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/add-experience'}>
                 <img className='min-w-4' src={assets.person_tick_icon} alt="" />
-                <p className='max-sm:hidden'>View Applications</p>
+                <p className='max-sm:hidden'>Add Experience</p>
               </NavLink>
             </ul>
           </div>

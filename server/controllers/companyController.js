@@ -73,7 +73,6 @@ export const loginCompany = async (req, res) => {
     }
 }
 
-
 // Get company data
 export const getCompanyData = async (req, res) => {
     try {
@@ -107,6 +106,31 @@ export const postJob = async (req, res) => {
             name,
         })
         await newJob.save()
+        res.json({ success: true, newJob })
+    }
+    catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}
+
+//Post an Experience
+export const postExperience = async (req, res) => {
+    const { title, description, salary, level, category, imgurl, name, company } = req.body
+    const companyId = req.company._id
+    try {
+        const newJob = new Job({
+            title,
+            description,
+            salary,
+            companyId,
+            date: Date.now(),
+            level,
+            category,
+            imgurl,
+            name,
+            company,
+        })
+        await newExperience.save()
         res.json({ success: true, newJob })
     }
     catch (error) {

@@ -30,7 +30,7 @@ const Navbar = () => {
             <li><Link to="/" className="text-black hover:text-gray-500 transition duration-300">Explore Jobs</Link></li>
             <li><Link to="/resume" className="text-black hover:text-gray-500 transition duration-300">Create Resume</Link></li>
             <li><Link to="/analyzer" className="text-black hover:text-gray-500 transition duration-300">Resume Analyzer</Link></li>
-            <li><Link to="/relevant-jobs" className="text-black hover:text-gray-500 transition duration-300">Relevant Jobs</Link></li>
+            <li><Link to="/experiences" className="text-black hover:text-gray-500 transition duration-300">Past Experiences</Link></li>
           </ul>
         </div>
 
