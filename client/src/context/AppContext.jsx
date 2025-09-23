@@ -42,6 +42,21 @@ export const AppContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+    // Function to fetch Jobs
+
+    const fetchExperiences = async()=>{
+        try {
+            const {data} = await axios.get(backendUrl+'/api/experiences')
+            if(data.success){
+                setExp(data.experiences)
+            }
+            else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     // Function to fetch company data
 
@@ -102,6 +117,7 @@ export const AppContextProvider = (props) => {
     
     useEffect(()=>{
         fetchJobs()
+        fetchExperiences()
         const storedCompanyToken = localStorage.getItem('companyToken')
         if(storedCompanyToken){
             setCompanyToken(storedCompanyToken)

@@ -1,12 +1,12 @@
 import express from 'express'
-import { getExperinceById, getExperiences } from '../controllers/experienceController.js'
+import { getExperienceById, getExperience } from '../controllers/experienceController.js'
 
 const router = express.Router()
 
 // Route to get all jobs data
-router.get('/', getExperiences)
+router.get('/', getExperience)
 
 // Route to get a single job by ID
-router.get('/:id', getExperinceById)
+router.get('/:id', getExperienceById)
 
 export default router;
