@@ -118,7 +118,7 @@ export const postExperience = async (req, res) => {
     const { title, description, salary, level, category, imgurl, name, company } = req.body
     const companyId = req.company._id
     try {
-        const newExperience = new Job({
+        const newExperience = new Experience({
             title,
             description,
             salary,
