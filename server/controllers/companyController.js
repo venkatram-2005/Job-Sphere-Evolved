@@ -196,39 +196,5 @@ export const changeVisibility = async (req, res) => {
     }
 };
 
-//Get Company's posted experiences
-export const getCompanyPostedExperience = async (req, res) => {
-    try {
-        const companyId = req.company._id;
-
-        const exp = await Experience.find({ companyId });
-
-        res.json({ success: true, exp });
-    } catch (error) {
-        res.json({ success: false, message: error.message });
-    }
-}
-
-// Change Job visibility
-export const changeVisibilityExperience = async (req, res) => {
-    try {
-        const { id } = req.body;
-
-        const companyId = req.company._id;
-
-        const exp = await Experience.findById(id);
-
-        if (companyId.toString() === exp.companyId.toString()) {
-            exp.visible = !exp.visible;
-        }
-
-        await exp.save();
-
-        res.json({ success: true, exp }); // Moved inside try block
-    } catch (error) {
-        res.json({ success: false, message: error.message });
-    }
-};
-
 
 
