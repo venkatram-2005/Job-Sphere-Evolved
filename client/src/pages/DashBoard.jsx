@@ -17,7 +17,7 @@ const DashBoard = () => {
 
   useEffect(()=>{
     if(companyData){
-      navigate('/dashboard/manage-jobs')
+      navigate('/dash-board/manage-jobs')
     }
   },[companyData])
 
@@ -48,22 +48,22 @@ const DashBoard = () => {
           {/* Left Side Bar */}
           <div className='inline-block min-h-screen border-r-2'>
             <ul className='flex flex-col items-start p5 text-gray-800'>
-              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/add-job'}>
+              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dash-board/add-job'}>
                 <img className='min-w-4' src={assets.add_icon} alt="" />
                 <p className='max-sm:hidden'>Add Job</p>
               </NavLink>
 
-              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/manage-jobs'}>
+              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dash-board/manage-jobs'}>
                 <img className='min-w-4' src={assets.home_icon} alt="" />
                 <p className='max-sm:hidden'>Manage Jobs</p>
               </NavLink>
 
-              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/add-experience'}>
+              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dash-board/add-experience'}>
                 <img className='min-w-4' src={assets.person_tick_icon} alt="" />
                 <p className='max-sm:hidden'>Add Experience</p>
               </NavLink>
 
-              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dashboard/manage-experiences'}>
+              <NavLink className={({isActive})=>` flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && 'bg-blue-100 border-r-4 border-blue-500'}`} to={'/dash-board/manage-experiences'}>
                 <img className='min-w-4' src={assets.home_icon} alt="" />
                 <p className='max-sm:hidden'>Manage Experiences</p>
               </NavLink>

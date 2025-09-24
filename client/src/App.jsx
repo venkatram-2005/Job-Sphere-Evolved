@@ -37,7 +37,7 @@ const App = () => {
         } />
 
         {/* Dashboard with nested routes */}
-        <Route path='/dashboard' element={<Dashboard />}>
+        <Route path='/dash-board' element={<Dashboard />}>
           {/* Only render these routes if companyToken is present */}
           {companyToken && (
             <>

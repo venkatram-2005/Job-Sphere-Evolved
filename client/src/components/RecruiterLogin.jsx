@@ -30,7 +30,7 @@ const RecruiterLogin = () => {
                     setCompanyData(data.company)
                     setCompanyToken(data.token)
                     localStorage.setItem('companyToken', data.token);
-                    navigate('/dashboard')
+                    navigate('/dash-board')
                     setShowRecruiterLogin(false)
                 }
                 else{
@@ -49,7 +49,7 @@ const RecruiterLogin = () => {
                     setCompanyData(data.company)
                     setCompanyToken(data.token)
                     localStorage.setItem('companyToken', data.token);
-                    navigate('/dashboard')
+                    navigate('/dash-board')
                     setShowRecruiterLogin(false)
                 }
                 else{
