@@ -29,6 +29,12 @@ const App = () => {
         <Route path='/apply-job/:id' element={<ApplyJob />} />
         <Route path='/experiences/:id' element={<ViewExperience />} />
         <Route path='/applications' element={<Applications />} />
+        <Route path="/create-resume" element={
+          <iframe
+            src="https://jobsphere-resume-maker.vercel.app/"
+            style={{ width: '100%', height: '100vh', border: 'none' }}
+          />
+        } />
 
         {/* Dashboard with nested routes */}
         <Route path='/dashboard' element={<Dashboard />}>

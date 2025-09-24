@@ -1,7 +1,8 @@
 {
-  "rewrites": [
-    { "source": "/create-resume/:path*", "destination": "https://jobsphere-resume-maker.vercel.app/:path*" },
-    { "source": "/create-resume", "destination": "https://jobsphere-resume-maker.vercel.app/" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/"
+      }
+    ]
+  }
