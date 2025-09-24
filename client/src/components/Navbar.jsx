@@ -28,7 +28,17 @@ const Navbar = () => {
         <div className="hidden md:flex justify-center">
           <ul className="list-none flex gap-6">
             <li><Link to="/" className="text-black hover:text-gray-500 transition duration-300">Explore Jobs</Link></li>
-            <li><Link to="/resume" className="text-black hover:text-gray-500 transition duration-300">Create Resume</Link></li>
+            <li>
+              <a
+                href="https://jobsphere-resume-maker.vercel.app/"
+                className="text-black hover:text-gray-500 transition duration-300"
+                target="_blank"      // opens in new tab
+                rel="noopener noreferrer" // security best practice
+              >
+                Create Resume
+              </a>
+            </li>
+
             <li><Link to="/analyzer" className="text-black hover:text-gray-500 transition duration-300">Resume Analyzer</Link></li>
             <li><Link to="/experiences" className="text-black hover:text-gray-500 transition duration-300">Past Experiences</Link></li>
           </ul>
