@@ -144,7 +144,7 @@ const AddJob = () => {
        <div className='container p-4 flex flex-col w-full items-start gap-3'>
             <div className='w-full'>
             <p className='mb-2'>Job Salary Range</p>
-            <input className='w-full px-3 py-3 border-2 border-gray-300 rounded sm:w-[120px]' onChange={e=>setSalary(e.target.value)} type="String" placeholder='2500' />
+            <input className='w-full px-3 py-3 border-2 border-gray-300 rounded sm:w-[120px]' onChange={e=>setSalary(e.target.value)} type="String" placeholder='2500 in INR' />
             </div>
         </div>
 

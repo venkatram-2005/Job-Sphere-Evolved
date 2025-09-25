@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import ViewExperience from './pages/ViewExperience'
 import Analyzer from './pages/Analyzer'
 import CreateResume from './pages/CreateResume'
+import ManageExperiences from './pages/ManageExperiences'
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext)
@@ -40,7 +41,7 @@ const App = () => {
               <Route path='add-job' element={<AddJob />} />
               <Route path='manage-jobs' element={<ManageJobs />} />
               <Route path='add-experience' element={<AddExperience />} />
-              {/* <Route path='manage-experiences' element={<ManageExperiences />} /> */}
+              <Route path='manage-experiences' element={<ManageExperiences />} />
             </>
           )}
         </Route>
