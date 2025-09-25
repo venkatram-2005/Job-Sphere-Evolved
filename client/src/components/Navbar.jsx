@@ -77,9 +77,9 @@ const Navbar = () => {
         <div className="md:hidden bg-white shadow-lg py-4">
           <ul className="list-none flex flex-col items-center gap-4">
             <li><Link to="/" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Explore Jobs</Link></li>
-            <li><Link to="/resume" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Create Resume</Link></li>
+            <li><Link to="/create-resume" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Create Resume</Link></li>
             <li><Link to="/analyzer" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Resume Analyzer</Link></li>
-            <li><Link to="/relevant-jobs" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Relevant Jobs</Link></li>
+            <li><Link to="/experiences" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Past Experiences</Link></li>
           </ul>
           <div className="mt-4 flex flex-col items-center gap-3">
             {

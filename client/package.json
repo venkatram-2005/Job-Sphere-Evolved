@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.24.1",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.8.2",
+    "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "k-convert": "^1.0.6",
     "lucide-react": "^0.544.0",
@@ -20,7 +22,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^11.0.5",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
