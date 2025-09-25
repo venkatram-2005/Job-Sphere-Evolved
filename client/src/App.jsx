@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ViewExperience from './pages/ViewExperience'
 import Analyzer from './pages/Analyzer'
+import CreateResume from './pages/CreateResume'
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext)
@@ -30,12 +31,7 @@ const App = () => {
         <Route path='/experiences/:id' element={<ViewExperience />} />
         <Route path='/applications' element={<Applications />} />
         <Route path='/analyzer' element={<Analyzer />} />
-        <Route path="/create-resume" element={
-          <iframe
-            src="https://jobsphere-resume-maker.vercel.app/"
-            style={{ width: '100%', height: '100vh', border: 'none' }}
-          />
-        } />
+        <Route path="/create-resume" element={<CreateResume/>} />
         {/* Dashboard with nested routes */}
         <Route path='/dash-board' element={<Dashboard />}>
           {/* Only render these routes if companyToken is present */}
