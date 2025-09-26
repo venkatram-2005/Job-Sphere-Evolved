@@ -2,6 +2,9 @@ import JobApplication from '../models/JobApplication.js'
 import Job from "../models/Job.js"
 import User from "../models/User.js"
 import { v2 as cloudinary } from 'cloudinary'
+import fs from 'fs'
+import {generateEmbedding} from '../utils/embeddings.js'
+import pdfParse from 'pdf-parse.js'
 
 // Get user data
 export const getUserData = async (req, res) => {
@@ -86,6 +89,15 @@ export const updateUserResume = async (req, res) => {
         if (resumeFile) {
             const resumeUpload = await cloudinary.uploader.upload(resumeFile);
             userData.resume = resumeUpload.secure_url;
+
+            // extract text from PDF
+            const pdfBuffer = fs.readFileSync(resumeFile);
+            const pdfData = await pdfParse(pdfBuffer);
+            const resumeText = pdfData.text;
+
+            // generate embedding
+            const embedding = await generateEmbedding(resumeText);
+            userData.resumeEmbedding = embedding;
         }
 
         await userData.save();
