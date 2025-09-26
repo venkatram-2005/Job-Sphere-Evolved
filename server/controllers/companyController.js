@@ -5,6 +5,7 @@ import generateToken from '../utils/generateToken.js'
 import Job from '../models/Job.js'
 import Experience from '../models/Experience.js'
 import JobApplication from '../models/JobApplication.js'
+import { generateEmbedding } from '../utils/embedding.js';
 
 //Register the Company
 export const registerCompany = async (req, res) => {
@@ -93,6 +94,7 @@ export const postJob = async (req, res) => {
     const { title, description, location, salary, level, category, link, imgurl, name } = req.body
     const companyId = req.company._id
     try {
+        const embedding = await generateEmbedding(`${title}. ${description}`);
         const newJob = new Job({
             title,
             description,
@@ -105,6 +107,7 @@ export const postJob = async (req, res) => {
             link,
             imgurl,
             name,
+            embedding
         })
         await newJob.save()
         res.json({ success: true, newJob })
