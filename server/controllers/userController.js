@@ -2,8 +2,6 @@ import JobApplication from '../models/JobApplication.js'
 import Job from "../models/Job.js"
 import User from "../models/User.js"
 import { v2 as cloudinary } from 'cloudinary'
-import { generateEmbedding } from "../utils/embedding.js";
-import pdfParse from "pdf-parse"; // install: npm i pdf-parse
 
 // Get user data
 export const getUserData = async (req, res) => {
@@ -79,53 +77,21 @@ export const getUserJobApplications = async (req, res) => {
 
 // Update user profile (resume)
 export const updateUserResume = async (req, res) => {
-  try {
-    const userId = req.auth.userId;
-    const userData = await User.findById(userId);
+    try {
+        const userId = req.auth.userId
+        const resumeFile = req.file.path
+        const userData = await User.findById(userId) 
 
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: "No file uploaded" });
+
+        if (resumeFile) {
+            const resumeUpload = await cloudinary.uploader.upload(resumeFile);
+            userData.resume = resumeUpload.secure_url;
+        }
+
+        await userData.save();
+
+        return res.json({ success: true, message: 'Resume Updated' });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
     }
-
-    // -----------------------------
-    // Upload PDF to Cloudinary (from memory)
-    // -----------------------------
-    const streamUpload = (buffer) =>
-      new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { resource_type: "auto" },
-          (error, result) => {
-            if (result) resolve(result);
-            else reject(error);
-          }
-        );
-        stream.end(buffer);
-      });
-
-    const uploadResult = await streamUpload(req.file.buffer);
-    userData.resume = uploadResult.secure_url;
-
-    // -----------------------------
-    // Extract text from PDF via uploaded URL
-    // -----------------------------
-    // const response = await fetch(userData.resume);
-    // const arrayBuffer = await response.arrayBuffer();
-    // const pdfData = await pdfParse(Buffer.from(arrayBuffer));
-    // const resumeText = pdfData.text;
-
-    // // console.log("Extracted Resume Text: ", resumeText);
-
-    // // -----------------------------
-    // // Generate embedding
-    // // -----------------------------
-    // const embedding = await generateEmbedding(resumeText);
-    // userData.resumeEmbedding = embedding;
-
-    await userData.save();
-
-    return res.json({ success: true, message: "Resume Updated" });
-  } catch (error) {
-    console.error("Resume update error:", error);
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
+}
