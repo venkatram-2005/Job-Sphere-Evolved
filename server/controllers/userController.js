@@ -4,7 +4,6 @@ import User from "../models/User.js"
 import { v2 as cloudinary } from 'cloudinary'
 import { generateEmbedding } from "../utils/embedding.js";
 import pdfParse from "pdf-parse"; // install: npm i pdf-parse
-import fs from "fs";
 
 // Get user data
 export const getUserData = async (req, res) => {
