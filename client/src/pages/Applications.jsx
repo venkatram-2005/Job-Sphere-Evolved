@@ -7,49 +7,68 @@ import { AppContext } from '../context/AppContext'
 import { useUser, useAuth } from '@clerk/clerk-react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import pdfToText from 'react-pdftotext'
 
 const Applications = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [resume, setResume] = useState(null)
+  const [resumeText, setResumeText] = useState('')
   const {backendUrl, userData, userApplications, fetchUserData, fetchUserApplications} = useContext(AppContext)
   
   const {user} = useUser()
   const {getToken} = useAuth()
 
-  const updateResume = async()=>{
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0]
+    setResume(file)
+
+    try {
+      const text = await pdfToText(file)
+      setResumeText(text)
+    } catch (err) {
+      console.error("Failed to extract text from PDF:", err)
+      toast.error("Failed to extract text from PDF")
+    }
+  }
+
+  const updateResume = async () => {
+    if (!resume) return toast.error("Please select a resume first")
+
     try {
       const formData = new FormData()
-      formData.append('resume',resume)
+      formData.append('resume', resume)
+      formData.append('resumeText', resumeText) // send extracted text too
+      // console.log("Resume Text:", resumeText)
 
       const token = await getToken()
-      const {data} = await axios.post(backendUrl+'/api/users/update-resume'
-        ,formData, 
-        {headers : {Authorization : `Bearer ${token}`}}
+      const {data} = await axios.post(
+        backendUrl+'/api/users/update-resume',
+        formData, 
+        { headers: { Authorization: `Bearer ${token}` } }
       )
 
       if(data.success){
         toast.success(data.message)
         await fetchUserData()
-      }
-      else{
+      } else {
         toast.error(data.message)
       }
     } catch (error) {
       toast.error(error.message)
     }
+
     setIsEdit(false)
     setResume(null)
+    setResumeText('')
   }
 
-  useEffect(()=>{
-    if(user){
-      fetchUserApplications()
-    }
-  },[user])
+  useEffect(() => {
+    if(user) fetchUserApplications()
+  }, [user])
   
   useEffect(() => {
-    console.log("userData:", userData);
-  }, [userData]);
+    console.log("userData:", userData)
+  }, [userData])
   
   return (
     <>
@@ -70,7 +89,7 @@ const Applications = () => {
                     {resume ? resume.name : "Select Resume"}
                   </p>
                   <input
-                    onChange={(e) => setResume(e.target.files[0])}
+                    onChange={handleFileChange}
                     accept="application/pdf"
                     type="file"
                     id="resumeUpload"

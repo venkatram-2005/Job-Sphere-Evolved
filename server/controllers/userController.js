@@ -2,9 +2,9 @@ import JobApplication from '../models/JobApplication.js'
 import Job from "../models/Job.js"
 import User from "../models/User.js"
 import { v2 as cloudinary } from 'cloudinary'
-import fs from 'fs'
-import {generateEmbedding} from '../utils/embeddings.js'
-import pdfParse from 'pdf-parse.js'
+import {generateEmbedding} from '../utils/embedding.js'
+import fs from 'fs';
+
 
 // Get user data
 export const getUserData = async (req, res) => {
@@ -80,30 +80,36 @@ export const getUserJobApplications = async (req, res) => {
 
 // Update user profile (resume)
 export const updateUserResume = async (req, res) => {
-    try {
-        const userId = req.auth.userId
-        const resumeFile = req.file.path
-        const userData = await User.findById(userId) 
+  try {
+    const userId = req.auth.userId;
+    const resumeFile = req.file?.path; // optional
+    const { resumeText } = req.body;   // text sent from frontend
+    const userData = await User.findById(userId);
 
-
-        if (resumeFile) {
-            const resumeUpload = await cloudinary.uploader.upload(resumeFile);
-            userData.resume = resumeUpload.secure_url;
-
-            // extract text from PDF
-            const pdfBuffer = fs.readFileSync(resumeFile);
-            const pdfData = await pdfParse(pdfBuffer);
-            const resumeText = pdfData.text;
-
-            // generate embedding
-            const embedding = await generateEmbedding(resumeText);
-            userData.resumeEmbedding = embedding;
-        }
-
-        await userData.save();
-
-        return res.json({ success: true, message: 'Resume Updated' });
-    } catch (error) {
-        res.json({ success: false, message: error.message });
+    if (!userData) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
-}
+
+    // Upload resume PDF if provided
+    if (resumeFile) {
+      const resumeUpload = await cloudinary.uploader.upload(resumeFile);
+      userData.resume = resumeUpload.secure_url;
+
+      // Optionally delete local file
+      fs.unlinkSync(resumeFile);
+    }
+
+    // Generate embedding from frontend-extracted text
+    if (resumeText) {
+      const embedding = await generateEmbedding(resumeText);
+      userData.resumeEmbedding = embedding;
+    }
+
+    await userData.save();
+
+    return res.json({ success: true, message: "Resume Updated" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
