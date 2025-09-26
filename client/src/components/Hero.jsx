@@ -47,17 +47,35 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className='border border-gray-300 shadow-md mx-2 mt-5 p-6 rounded-md flex'>
-        <div className='flex justify-center gap-10 lg:gap-16 flex-wrap'>
-            <p className='font-medium'>Trusted by: </p>
-            <img className="h-6" src={assets.walmart_logo} alt="" />
-            <img className="h-6" src={assets.microsoft_logo} alt="" />
-            <img className="h-6" src={assets.adobe_logo} alt="" />
-            <img className="h-6" src={assets.amazon_logo} alt="" />
-            <img className="h-6" src={assets.accenture_logo} alt="" />
-            <img className="h-6" src={assets.samsung_logo} alt="" />
+      <div className="border border-gray-300 shadow-md mx-2 mt-5 p-6 rounded-md overflow-hidden">
+        <div className="flex items-center">
+          <p className="font-medium mr-5">From:</p>
+          <div className="relative w-full overflow-hidden">
+            {/* Animated track */}
+            <div className="flex gap-16 animate-scroll whitespace-nowrap">
+              <img className="h-6" src={assets.walmart_logo} alt="Walmart" />
+              <img className="h-6" src={assets.microsoft_logo} alt="Microsoft" />
+              <img className="h-6" src={assets.adobe_logo} alt="Adobe" />
+              <img className="h-6" src={assets.amazon_logo} alt="Amazon" />
+              <img className="h-6" src={assets.accenture_logo} alt="Accenture" />
+              <img className="h-6" src={assets.samsung_logo} alt="Samsung" />
+              <img className="h-6" src={assets.google_logo} alt="Google" />
+              <img className="h-6" src={assets.ibm} alt="ibm" />
+
+              {/* duplicate logos for seamless looping */}
+              <img className="h-6" src={assets.walmart_logo} alt="Walmart" />
+              <img className="h-6" src={assets.microsoft_logo} alt="Microsoft" />
+              <img className="h-6" src={assets.adobe_logo} alt="Adobe" />
+              <img className="h-6" src={assets.amazon_logo} alt="Amazon" />
+              <img className="h-6" src={assets.accenture_logo} alt="Accenture" />
+              <img className="h-6" src={assets.samsung_logo} alt="Samsung" />
+              <img className="h-6" src={assets.google_logo} alt="Google" />
+              <img className="h-6" src={assets.ibm} alt="ibm" />
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   )
 }
