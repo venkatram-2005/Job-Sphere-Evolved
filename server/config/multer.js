@@ -1,7 +1,8 @@
 import multer from "multer";
 
-const storage = multer.diskStorage({})
+// Store uploaded files in memory (req.file.buffer)
+const storage = multer.memoryStorage();
 
-const upload = multer({storage})
+const upload = multer({ storage });
 
-export default upload
+export default upload;

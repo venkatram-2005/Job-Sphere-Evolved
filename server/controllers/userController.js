@@ -79,30 +79,47 @@ export const getUserJobApplications = async (req, res) => {
 }
 
 // Update user profile (resume)
+
 export const updateUserResume = async (req, res) => {
-    try {
-        const userId = req.auth.userId
-        const resumeFile = req.file.path
-        const userData = await User.findById(userId) 
+  try {
+    const userId = req.auth.userId;
+    const userData = await User.findById(userId);
 
-
-        if (resumeFile) {
-            const resumeUpload = await cloudinary.uploader.upload(resumeFile);
-            userData.resume = resumeUpload.secure_url;
-
-            // extract text from PDF for embeddings
-            const pdfBuffer = fs.readFileSync(resumeFile);
-            const pdfData = await pdfParse(pdfBuffer);
-            const resumeText = pdfData.text;
-
-            // generate embedding
-            const embedding = await generateEmbedding(resumeText);
-            userData.resumeEmbedding = embedding;
-        }
-        await userData.save();
-
-        return res.json({ success: true, message: 'Resume Updated' });
-    } catch (error) {
-        res.json({ success: false, message: error.message });
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
     }
-}
+
+    // Upload PDF to Cloudinary using stream
+    const streamUpload = (buffer) =>
+      new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { resource_type: "auto" },
+          (error, result) => {
+            if (result) resolve(result);
+            else reject(error);
+          }
+        );
+        stream.end(buffer);
+      });
+
+    const uploadResult = await streamUpload(req.file.buffer);
+    userData.resume = uploadResult.secure_url;
+
+    // Extract text from PDF buffer
+    const pdfData = await pdfParse(req.file.buffer);
+    const resumeText = pdfData.text;
+
+    // console.log("Extracted Resume Text: ", resumeText);
+
+    // Generate embedding
+    const embedding = await generateEmbedding(resumeText);
+    userData.resumeEmbedding = embedding;
+
+    await userData.save();
+
+    return res.json({ success: true, message: "Resume Updated" });
+  } catch (error) {
+    console.error("Resume update error:", error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
