@@ -201,9 +201,17 @@ export const getCompanyPostedExperiences = async (req, res) => {
     try {
         const companyId = req.company._id;
 
-        const exp = await Experience.find({ companyId });
+        const experiences = await Experience.find({ companyId });
 
-        res.json({ success: true, exp });
+        // Example: adding number of applicants or any extra info
+        const expData = await Promise.all(
+            experiences.map(async (exp) => {
+                // Optional: fetch related data here, if needed
+                return { ...exp.toObject() };
+            })
+        );
+
+        res.json({ success: true, exp: expData });
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
