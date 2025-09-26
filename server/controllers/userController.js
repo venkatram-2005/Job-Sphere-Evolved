@@ -108,18 +108,18 @@ export const updateUserResume = async (req, res) => {
     // -----------------------------
     // Extract text from PDF via uploaded URL
     // -----------------------------
-    const response = await fetch(userData.resume);
-    const arrayBuffer = await response.arrayBuffer();
-    const pdfData = await pdfParse(Buffer.from(arrayBuffer));
-    const resumeText = pdfData.text;
+    // const response = await fetch(userData.resume);
+    // const arrayBuffer = await response.arrayBuffer();
+    // const pdfData = await pdfParse(Buffer.from(arrayBuffer));
+    // const resumeText = pdfData.text;
 
-    // console.log("Extracted Resume Text: ", resumeText);
+    // // console.log("Extracted Resume Text: ", resumeText);
 
-    // -----------------------------
-    // Generate embedding
-    // -----------------------------
-    const embedding = await generateEmbedding(resumeText);
-    userData.resumeEmbedding = embedding;
+    // // -----------------------------
+    // // Generate embedding
+    // // -----------------------------
+    // const embedding = await generateEmbedding(resumeText);
+    // userData.resumeEmbedding = embedding;
 
     await userData.save();
 
