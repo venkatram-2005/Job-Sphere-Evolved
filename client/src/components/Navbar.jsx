@@ -39,7 +39,7 @@ const Navbar = () => {
           {
             user ? (
               <div className='flex items-center gap-1'>
-                <Link to={'/applications'} className="hover:text-gray-600">Applied Jobs</Link>
+                <Link to={'/applications'} className="hover:text-gray-600">Action Center</Link>
                 <p>|</p>
                 <p className='max-sm:hidden'>Hi, {user.firstName + " " + user.lastName}</p>
                 <UserButton />
@@ -85,7 +85,7 @@ const Navbar = () => {
             {
               user ? (
                 <div className='flex flex-col items-center gap-2'>
-                  <Link to={'/applications'} onClick={() => setIsOpen(false)}>Applied Jobs</Link>
+                  <Link to={'/applications'} onClick={() => setIsOpen(false)}>Action Center</Link>
                   <p>Hi, {user.firstName + " " + user.lastName}</p>
                   <UserButton />
                 </div>

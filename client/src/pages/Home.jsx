@@ -13,6 +13,7 @@ const Home = () => {
       <Subscribe/>
       <Footer/>
     </div>
+    
   )
 }
 

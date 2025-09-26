@@ -11,6 +11,7 @@ import Footer from '../components/Footer'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useAuth } from '@clerk/clerk-react'
+import { ChartBar, ChartBarIcon, User } from 'lucide-react'
 
 const ViewExperience = () => {
   const { id } = useParams()
@@ -62,18 +63,20 @@ const ViewExperience = () => {
             <div className='flex flex-col md:flex-row items-center'>
               <img className='h-24 bg-white rounded-lg p-4 mr-4 max-md:mb-4 border' src={JobData.imgurl} alt="" />
               <div className='text-center md:text-left text-nuetral-700'>
-                <h1 className='text-2xl sm:text-4xl font-medium'>{JobData.company}</h1>
+                <h1 className='text-2xl sm:text-4xl font-medium'>{JobData.company} - {JobData.title}</h1>
                 <div className='flex flex-row flex-wrap max-md:justify-center gap-y-2 gap-6 items-center text-gray-600 mt-2'>
                   <span className='flex item-center gap-1'>
-                    <img src={assets.suitcase_icon} alt="" />
+                    {/* <img src={assets.person_icon} alt="" /> */}
+                    <User/>
                     {JobData.name}
                   </span>
-                  <span className='flex item-center gap-1'>
+                  {/* <span className='flex item-center gap-1'>
                     <img src={assets.location_icon} alt="" />
                     {JobData.title}
-                  </span>
+                  </span> */}
                   <span className='flex item-center gap-1'>
-                    <img src={assets.person_icon} alt="" />
+                    {/* <img src={ChartBar} alt="" /> */}
+                    <ChartBar/>
                     {JobData.level}
                   </span>
                   <span className='flex item-center gap-1'>

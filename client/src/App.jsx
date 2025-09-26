@@ -22,6 +22,7 @@ const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext)
 
   return (
+    
     <div>
       {showRecruiterLogin && <RecruiterLogin />}
       <ToastContainer />
