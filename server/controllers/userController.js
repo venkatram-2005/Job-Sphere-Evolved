@@ -78,7 +78,6 @@ export const getUserJobApplications = async (req, res) => {
 }
 
 // Update user profile (resume)
-
 export const updateUserResume = async (req, res) => {
   try {
     const userId = req.auth.userId;
@@ -88,7 +87,9 @@ export const updateUserResume = async (req, res) => {
       return res.status(400).json({ success: false, message: "No file uploaded" });
     }
 
-    // Upload PDF to Cloudinary using stream
+    // -----------------------------
+    // Upload PDF to Cloudinary (from memory)
+    // -----------------------------
     const streamUpload = (buffer) =>
       new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
@@ -104,13 +105,19 @@ export const updateUserResume = async (req, res) => {
     const uploadResult = await streamUpload(req.file.buffer);
     userData.resume = uploadResult.secure_url;
 
-    // Extract text from PDF buffer
-    const pdfData = await pdfParse(req.file.buffer);
+    // -----------------------------
+    // Extract text from PDF via uploaded URL
+    // -----------------------------
+    const response = await fetch(userData.resume);
+    const arrayBuffer = await response.arrayBuffer();
+    const pdfData = await pdfParse(Buffer.from(arrayBuffer));
     const resumeText = pdfData.text;
 
     // console.log("Extracted Resume Text: ", resumeText);
 
+    // -----------------------------
     // Generate embedding
+    // -----------------------------
     const embedding = await generateEmbedding(resumeText);
     userData.resumeEmbedding = embedding;
 
