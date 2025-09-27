@@ -29,19 +29,61 @@ export const AppContextProvider = (props) => {
 
     // Function to fetch Jobs
 
-    const fetchJobs = async()=>{
+    const fetchJobs = async () => {
         try {
-            const {data} = await axios.get(backendUrl+'/api/jobs')
-            if(data.success){
-                setJobs(data.jobs)
+            const { data } = await axios.get(`${backendUrl}/api/jobs`);
+            if (!data.success) {
+                toast.error(data.message);
+                return;
             }
-            else{
-                toast.error(data.message)
+
+            let jobs = data.jobs;
+
+            // Wait until userData is available
+            if (!user) {
+                //toast.info("Log in and upload resume to see personalized job recommendations!");
+                setJobs(jobs);
+                return;
             }
+
+            if (!userData) {
+                // user is logged in but backend data not yet fetched
+                setJobs(jobs);
+                return;
+            }
+
+            // If user has a resume embedding
+            if (userData.resumeEmbedding && userData.resumeEmbedding.length > 0) {
+                const userEmbedding = userData.resumeEmbedding;
+
+                jobs = jobs.map((job) => {
+                    if (!job.embedding || job.embedding.length === 0) {
+                        // console.log(`Job: ${job.title} | Score: 0 (no embedding)`);
+                        return { ...job, score: 0 };
+                    }
+                    const score = cosineSimilarity(userEmbedding, job.embedding);
+                    // console.log(`Job: ${job.title} | Score: ${score.toFixed(4)}`);
+                    return { ...job, score };
+                });
+
+                jobs.sort((a, b) => a.score - b.score);
+            }
+
+            setJobs(jobs);
         } catch (error) {
-            toast.error(error.message)
+            toast.error("Failed to fetch jobs: " + error.message);
         }
+    };
+
+
+    // Cosine similarity helper function
+    function cosineSimilarity(vecA, vecB) {
+        const dot = vecA.reduce((acc, val, i) => acc + val * vecB[i], 0);
+        const magA = Math.sqrt(vecA.reduce((acc, val) => acc + val * val, 0));
+        const magB = Math.sqrt(vecB.reduce((acc, val) => acc + val * val, 0));
+        return magA && magB ? dot / (magA * magB) : 0;
     }
+
     // Function to fetch Experiences
 
     const fetchExperiences = async()=>{
@@ -114,6 +156,15 @@ export const AppContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+
+    useEffect(() => {
+        if (!user) {
+            fetchJobs(); // show normal jobs
+        } else if (userData) {
+            fetchJobs(); // show personalized jobs
+        }
+    }, [user, userData]);
+
     
     useEffect(()=>{
         fetchJobs()
