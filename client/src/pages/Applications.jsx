@@ -8,11 +8,16 @@ import { useUser, useAuth } from '@clerk/clerk-react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import pdfToText from 'react-pdftotext'
+import { useNavigate } from 'react-router-dom'
 
 const Applications = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [resume, setResume] = useState(null)
   const [resumeText, setResumeText] = useState('')
+  const [loading, setLoading] = useState(false) // 🔑 loading state
+  
+  const navigate = useNavigate()
+
   const {backendUrl, userData, userApplications, fetchUserData, fetchUserApplications} = useContext(AppContext)
   
   const {user} = useUser()
@@ -34,11 +39,11 @@ const Applications = () => {
   const updateResume = async () => {
     if (!resume) return toast.error("Please select a resume first")
 
+    setLoading(true) // start loading
     try {
       const formData = new FormData()
       formData.append('resume', resume)
-      formData.append('resumeText', resumeText) // send extracted text too
-      // console.log("Resume Text:", resumeText)
+      formData.append('resumeText', resumeText)
 
       const token = await getToken()
       const {data} = await axios.post(
@@ -55,11 +60,12 @@ const Applications = () => {
       }
     } catch (error) {
       toast.error(error.message)
+    } finally {
+      setLoading(false) // stop loading
+      setIsEdit(false)
+      setResume(null)
+      setResumeText('')
     }
-
-    setIsEdit(false)
-    setResume(null)
-    setResumeText('')
   }
 
   useEffect(() => {
@@ -84,8 +90,11 @@ const Applications = () => {
           <div className="flex gap-2 mb-6 mt-3 justify-center">
             {isEdit || (userData && userData.resume === "") ? (
               <>
-                <label htmlFor="resumeUpload" className="flex items-center">
-                  <p className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg mr-2">
+                <label
+                  htmlFor="resumeUpload"
+                  className="flex items-center cursor-pointer"
+                >
+                  <p className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg mr-2 cursor-pointer">
                     {resume ? resume.name : "Select Resume"}
                   </p>
                   <input
@@ -99,9 +108,14 @@ const Applications = () => {
                 </label>
                 <button
                   onClick={updateResume}
-                  className="bg-green-200 text-green-600 px-4 py-2 rounded-lg mr-2"
+                  disabled={loading}
+                  className={`px-4 py-2 rounded-lg mr-2 ${
+                    loading
+                      ? "bg-green-300 text-green-700 cursor-not-allowed"
+                      : "bg-green-200 text-green-600 cursor-pointer"
+                  }`}
                 >
-                  Save
+                  {loading ? "Saving..." : "Save"}
                 </button>
               </>
             ) : (
@@ -109,13 +123,13 @@ const Applications = () => {
                 <a
                   target="_blank"
                   href={userData?.resume || "#"}
-                  className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+                  className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg cursor-pointer"
                 >
                   Resume
                 </a>
                 <button
                   onClick={() => setIsEdit(true)}
-                  className="text-gray-500 border border-gray-300 rounded-lg px-4 py-2"
+                  className="text-gray-500 border border-gray-300 rounded-lg px-4 py-2 cursor-pointer"
                 >
                   Edit
                 </button>
@@ -137,6 +151,7 @@ const Applications = () => {
                   <th className="py-3 px-4 border-b">Job Title</th>
                   <th className="py-3 px-4 border-b max-sm:hidden">Location</th>
                   <th className="py-3 px-4 border-b max-sm:hidden">Date</th>
+                  <th className="py-3 px-4 border-b max-sm:hidden">Go to Job</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,13 +168,29 @@ const Applications = () => {
                         <span className="text-gray-400 italic">No logo</span>
                       )}
                     </td>
-                    <td className="py-2 px-4 border-b">{job?.jobId?.name || "No title"}</td>
-                    <td className="py-2 px-4 border-b">{job?.jobId?.title || "No title"}</td>
+                    <td className="py-2 px-4 border-b">
+                      {job?.jobId?.name || "No title"}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {job?.jobId?.title || "No title"}
+                    </td>
                     <td className="py-2 px-4 border-b max-sm:hidden">
                       {job?.jobId?.location || "No location"}
                     </td>
                     <td className="py-2 px-4 border-b max-sm:hidden">
                       {job?.date ? moment(job.date).format("LL") : "No date"}
+                    </td>
+                    <td className="py-2 px-4 border-b max-sm:hidden">
+                      {/* Go to Job button */}
+                        <button
+                          onClick={() => {
+                            navigate(`/apply-job/${job?.jobId?._id}`)
+                            window.scrollTo(0, 0)
+                          }}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded cursor-pointer text-sm"
+                        >
+                          Go to Job
+                        </button>
                     </td>
                   </tr>
                 ))}
