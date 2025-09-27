@@ -68,7 +68,7 @@ export const AppContextProvider = (props) => {
 
                 jobs.sort((a, b) => a.score - b.score);
             }
-
+            toast.success("Personalized job recommendations based on your resume!");
             setJobs(jobs);
         } catch (error) {
             toast.error("Failed to fetch jobs: " + error.message);
