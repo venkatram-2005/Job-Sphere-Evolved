@@ -11,16 +11,19 @@ const AddJob = () => {
   const [link, setLink] = useState('')
   const [name, setName] = useState('')
   const [imgurl, setImgUrl] = useState('')
-  const [location, setLocation] = useState('')
-  const [category, setCategory] = useState('')
-  const [level, setLevel] = useState('')
+  const [location, setLocation] = useState('Bangalore')
+  const [category, setCategory] = useState('Software Developer')
+  const [level, setLevel] = useState('Beginner Level')
   const [salary, setSalary] = useState('')
+  const [loading, setLoading] = useState(false)
+
   const editorRef = useRef(null)
   const quillRef = useRef(null)
   const {backendUrl, companyToken} = useContext(AppContext)
 
   const onSubmitHandler = async(e) =>{
     e.preventDefault()
+    setLoading(true)
     try {
       const description = quillRef.current.root.innerHTML
       const {data} = await axios.post(backendUrl+'/api/company/post-job', 
@@ -43,6 +46,9 @@ const AddJob = () => {
       }      
     } catch (error) {
       toast.error(error.message)
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -149,7 +155,17 @@ const AddJob = () => {
         </div>
 
 
-       <button className='ml-5 w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
+       <button 
+        className='ml-5 w-28 py-3 mt-4 bg-black text-white rounded flex justify-center items-center'
+        disabled={loading}
+      >
+          {loading ? (
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          ) : (
+            "ADD"
+          )}
+      </button>
+
     </form>
 
   )
