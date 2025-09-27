@@ -12,6 +12,8 @@ import userRoutes from './routes/userRoutes.js'
 import {clerkMiddleware} from '@clerk/express'
 import subscriberRoutes from './routes/subscriberRoutes.js';
 import experienceRoutes from './routes/experienceRoutes.js';
+import cron from "node-cron";
+import { sendWeeklyJobs } from "./jobs/sendWeeklyJobs.js";
 
 
 // Initialize express
@@ -43,6 +45,17 @@ app.use('/api/subscribe', subscriberRoutes);
 //port
 const PORT = process.env.PORT || 5000
 Sentry.setupExpressErrorHandler(app);
+
+// schedule job every Monday at 9AM
+cron.schedule("0 9 * * 1", async () => {
+  console.log("📧 Sending weekly job emails...");
+  try {
+    await sendWeeklyJobs();
+  } catch (err) {
+    console.error("❌ Weekly job failed:", err);
+  }
+});
+
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on http://localhost:${PORT}`)
