@@ -14,7 +14,8 @@ import { useAuth } from "@clerk/clerk-react";
 const ApplyJob = () => {
   const { id } = useParams();
   const [JobData, setJobData] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false); // 🔑 modal state
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [isAlreadyApplied, setIsAlreadyApplied] = useState(false);
 
   const {
     jobs,
@@ -28,12 +29,11 @@ const ApplyJob = () => {
   const { getToken } = useAuth();
 
   const fetchJob = async () => {
-    const { data } = await axios.get(backendUrl + `/api/jobs/${id}`);
     try {
+      const { data } = await axios.get(backendUrl + `/api/jobs/${id}`);
       if (!userData) {
         return toast.error("Login to apply for jobs");
       }
-
       if (data.success) {
         setJobData(data.job);
       } else {
@@ -42,6 +42,18 @@ const ApplyJob = () => {
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  // ✅ Check if user already applied
+  const checkAlreadyApplied = () => {
+    if (!Array.isArray(userApplications) || !JobData?._id) {
+      setIsAlreadyApplied(false);
+      return;
+    }
+    const hasApplied = userApplications.some(
+      (item) => item?.jobId?._id && item.jobId._id === JobData._id
+    );
+    setIsAlreadyApplied(hasApplied);
   };
 
   // 🔑 Save application only if user confirms
@@ -69,10 +81,9 @@ const ApplyJob = () => {
     if (!userData) {
       return toast.error("Login to apply for jobs");
     }
-
     if (JobData?.link) {
-      window.open(JobData.link, "_blank", "noopener,noreferrer"); // open external link
-      setShowConfirm(true); // show confirmation modal
+      window.open(JobData.link, "_blank", "noopener,noreferrer");
+      setShowConfirm(true);
     } else {
       toast.error("Job application link not found");
     }
@@ -81,6 +92,10 @@ const ApplyJob = () => {
   useEffect(() => {
     fetchJob();
   }, [id]);
+
+  useEffect(() => {
+    checkAlreadyApplied();
+  }, [JobData, userApplications]);
 
   return JobData ? (
     <>
@@ -123,9 +138,14 @@ const ApplyJob = () => {
             <div className="flex flex-col justify-center text-end text-sm max-md:mx-auto max-md:text-center">
               <button
                 onClick={applyHandler}
-                className="bg-blue-600 p-2.5 text-white px-10 rounded"
+                className={`p-2.5 px-10 rounded ${
+                  isAlreadyApplied
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 text-white"
+                }`}
+                disabled={isAlreadyApplied}
               >
-                Apply Now
+                {isAlreadyApplied ? "Already Applied" : "Apply Now"}
               </button>
               <p className="mt-1 text-gray-600">
                 Posted {moment(JobData.date).fromNow()}
@@ -143,9 +163,14 @@ const ApplyJob = () => {
             ></div>
             <button
               onClick={applyHandler}
-              className="bg-blue-600 p-2.5 text-white px-10 rounded mt-10"
+              className={`p-2.5 px-10 rounded mt-10 ${
+                isAlreadyApplied
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white"
+              }`}
+              disabled={isAlreadyApplied}
             >
-              Apply Now
+              {isAlreadyApplied ? "Already Applied" : "Apply Now"}
             </button>
           </div>
 
