@@ -28,7 +28,17 @@ const Navbar = () => {
         <div className="hidden md:flex justify-center">
           <ul className="list-none flex gap-6">
             <li><Link to="/" className="text-black hover:text-gray-500 transition duration-300">Explore Jobs</Link></li>
-            <li><Link to="/create-resume" className="text-black hover:text-gray-500 transition duration-300">Create Resume</Link></li>
+            <li>
+              <a
+                href="https://jobsphere-resume-maker.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-gray-500 transition duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Create Resume
+              </a>
+            </li>
             <li><Link to="/analyzer" className="text-black hover:text-gray-500 transition duration-300">Resume Analyzer</Link></li>
             <li><Link to="/experiences" className="text-black hover:text-gray-500 transition duration-300">Past Experiences</Link></li>
           </ul>
@@ -77,7 +87,18 @@ const Navbar = () => {
         <div className="md:hidden bg-white shadow-lg py-4">
           <ul className="list-none flex flex-col items-center gap-4">
             <li><Link to="/" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Explore Jobs</Link></li>
-            <li><Link to="/create-resume" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Create Resume</Link></li>
+            <li>
+              <a
+                href="https://jobsphere-resume-maker.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-gray-500 transition duration-300"
+                onClick={() => setIsOpen(false)}
+              >
+                Create Resume
+              </a>
+            </li>
+
             <li><Link to="/analyzer" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Resume Analyzer</Link></li>
             <li><Link to="/experiences" className="text-black hover:text-gray-500 transition duration-300" onClick={() => setIsOpen(false)}>Past Experiences</Link></li>
           </ul>

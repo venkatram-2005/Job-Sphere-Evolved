@@ -33,7 +33,29 @@ const App = () => {
         <Route path='/experiences/:id' element={<ViewExperience />} />
         <Route path='/applications' element={<Applications />} />
         <Route path='/analyzer' element={<Analyzer />} />
-        <Route path="/create-resume" element={<CreateResume/>} />
+        {/* <Route path="/create-resume" element={<CreateResume/>} /> */}
+        {/* <Route
+          path="/create-resume"
+          element={
+            <div>
+              {(() => {
+                // A small React component with useEffect
+                const Redirect = () => {
+                  React.useEffect(() => {
+                    window.open("https://jobsphere-resume-maker.vercel.app", 
+                      "_blank"
+                    );
+                  }, []);
+                  return <div>Redirecting to Resume Maker...</div>;
+                };
+                return <Redirect />;
+              })()}
+            </div>
+          }
+        /> */}
+
+
+
         {/* Dashboard with nested routes */}
         <Route path='/dash-board' element={<Dashboard />}>
           {/* Only render these routes if companyToken is present */}
